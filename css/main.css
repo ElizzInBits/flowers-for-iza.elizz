@@ -1555,11 +1555,7 @@ body {
   animation-play-state: paused !important;
 } /*# sourceMappingURL=main.css.map */
 
-<<<<<<< HEAD
-/* Fireworks Effect */
-=======
-/* Binary Rain Effect */
->>>>>>> 8debe34b7188ab78a5bd2ac655fc3e5812a962ad
+/* Enhanced Fireworks Effect */
 .binary-rain {
   position: fixed;
   top: 0;
@@ -1570,49 +1566,70 @@ body {
   z-index: 1;
 }
 
-<<<<<<< HEAD
+/* Enhanced Fireworks Effect */
 .firework {
   position: absolute;
-  width: 4px;
-  height: 20px;
-  background: linear-gradient(to top, #ff6b6b, #ffd93d);
-  border-radius: 2px;
-  box-shadow: 0 0 10px #ffd93d;
+  width: 8px;
+  height: 40px;
+  background: linear-gradient(to top, #ff6b6b, #ffd93d, #ffffff);
+  border-radius: 4px;
+  box-shadow: 0 0 20px #ffd93d, 0 0 40px #ff6b6b;
+  animation: rocketGlow 0.3s ease-in-out infinite alternate;
 }
 
-.star {
+.firework-trail {
+  position: absolute;
+  width: 4px;
+  height: 60px;
+  background: linear-gradient(to top, transparent, #ff6b6b, transparent);
+  top: 40px;
+  left: 2px;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+@keyframes rocketGlow {
+  0% { box-shadow: 0 0 20px #ffd93d, 0 0 40px #ff6b6b; }
+  100% { box-shadow: 0 0 30px #ffd93d, 0 0 60px #ff6b6b, 0 0 80px #ffffff; }
+}
+
+.explosion-particle {
   position: fixed;
-  font-size: 20px;
-  color: #6bf0ff;
-  text-shadow: 0 0 10px #6bf0ff;
-  animation: starFall 3s ease-out forwards;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 4s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--vx) * 0.7), calc(var(--vy) * 0.7)) scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--vx), calc(var(--vy) + 200px)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.falling-star {
+  position: fixed;
+  font-size: 24px;
+  animation: starFall 5s ease-out forwards;
   pointer-events: none;
 }
 
 @keyframes starFall {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translateY(0) rotate(0deg) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate(var(--vx), var(--vy)) scale(0.3);
-=======
-.binary-digit {
-  position: absolute;
-  top: -20px;
-  color: #6bf0ff;
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
-  font-weight: bold;
-  opacity: 0.4;
-  text-shadow: 0 0 10px #6bf0ff;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
->>>>>>> 8debe34b7188ab78a5bd2ac655fc3e5812a962ad
+    transform: translateY(400px) rotate(360deg) scale(0.3);
     opacity: 0;
   }
 }

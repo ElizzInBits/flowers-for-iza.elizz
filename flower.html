@@ -321,46 +321,71 @@
                 firework.className = 'firework';
                 firework.style.left = Math.random() * 100 + '%';
                 firework.style.bottom = '0px';
+                
+                // Adicionar rastro
+                const trail = document.createElement('div');
+                trail.className = 'firework-trail';
+                firework.appendChild(trail);
+                
                 container.appendChild(firework);
                 
-                // Animação do foguete subindo
-                const rocketHeight = Math.random() * 300 + 200;
-                firework.style.transition = 'bottom 1.5s ease-out';
+                const rocketHeight = Math.random() * 400 + 300;
+                firework.style.transition = 'bottom 2s ease-out';
                 firework.style.bottom = rocketHeight + 'px';
                 
-                // Explosão após 1.5s
                 setTimeout(() => {
                     explodeFirework(firework);
-                }, 1500);
+                }, 2000);
             }
             
             function explodeFirework(firework) {
                 const rect = firework.getBoundingClientRect();
                 firework.remove();
                 
-                // Criar estrelas da explosão
-                for (let i = 0; i < 15; i++) {
-                    const star = document.createElement('div');
-                    star.className = 'star';
-                    star.innerHTML = '★';
-                    star.style.left = rect.left + 'px';
-                    star.style.top = rect.top + 'px';
+                // Cores variadas para as explosões
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
+                const explosionColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Criar mais partículas para explosão mais densa
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'explosion-particle';
+                    particle.style.left = rect.left + 'px';
+                    particle.style.top = rect.top + 'px';
+                    particle.style.backgroundColor = explosionColor;
+                    particle.style.boxShadow = `0 0 20px ${explosionColor}`;
                     
-                    const angle = (i / 15) * Math.PI * 2;
-                    const velocity = Math.random() * 100 + 50;
-                    star.style.setProperty('--vx', Math.cos(angle) * velocity + 'px');
-                    star.style.setProperty('--vy', Math.sin(angle) * velocity + 'px');
+                    const angle = (i / 30) * Math.PI * 2;
+                    const velocity = Math.random() * 150 + 100;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
                     
-                    container.appendChild(star);
+                    particle.style.setProperty('--vx', vx + 'px');
+                    particle.style.setProperty('--vy', vy + 'px');
                     
-                    // Remover estrela após animação
-                    setTimeout(() => star.remove(), 3000);
+                    container.appendChild(particle);
+                    setTimeout(() => particle.remove(), 4000);
+                }
+                
+                // Adicionar estrelas que caem
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const star = document.createElement('div');
+                        star.className = 'falling-star';
+                        star.innerHTML = '✦';
+                        star.style.left = (rect.left + Math.random() * 200 - 100) + 'px';
+                        star.style.top = rect.top + 'px';
+                        star.style.color = explosionColor;
+                        star.style.textShadow = `0 0 15px ${explosionColor}`;
+                        
+                        container.appendChild(star);
+                        setTimeout(() => star.remove(), 5000);
+                    }, i * 100);
                 }
             }
             
-            // Lançar fogos periodicamente
-            setInterval(launchFirework, 2000);
-            launchFirework(); // Primeiro foguete imediato
+            setInterval(launchFirework, 3000);
+            launchFirework();
         }
         
         createFireworks();
